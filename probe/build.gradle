@@ -1,0 +1,70 @@
+buildscript {
+    repositories {
+        google()
+        maven { url 'https://jitpack.io' }
+    }
+}
+apply plugin: 'groovy'
+//apply plugin: 'maven'
+apply plugin: 'com.github.dcendents.android-maven'
+[compileJava, compileTestJava, compileGroovy]*.options*.encoding = 'UTF-8'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    compile "com.android.tools.build:transform-api:1.5.0"
+    implementation "com.android.tools.build:gradle:3.4.3"
+    implementation "commons-io:commons-io:2.4"
+}
+repositories {
+    mavenCentral()
+}
+group = "com.sk.hannibal"//project属性
+version = "1.0.1"//project属性
+//uploadArchives {
+////    version = version + '-SNAPSHOT'//if you are testing the demo I provide locally, you can uncomment this.
+//    //本地仓库的一种
+//    repositories{
+//        flatDir{
+//            name "localRepository"
+//            dir "localRepository/libs"
+//        }
+//        mavenDeployer {
+//            repository(url: uri('../repo-local'))
+//        }
+//    }
+//}
+//
+task sourcesJar(type: Jar) {
+    from project.file('src/main/groovy')
+    archiveClassifier = 'sources'
+}
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+}
+
+artifacts {
+    archives sourcesJar
+}
+//Properties properties = new Properties()
+//boolean isHasFile = false
+//if (project.rootProject.file('local.properties').exists()){
+//    isHasFile = true
+//    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//    println "1 hasfile:$isHasFile"
+//}
+
+
+//publish {
+//    userOrg = 'magicbaby'//bintray.com用户名
+//    repoName = "maven"   //bintray上常见的仓库的名字
+//    groupId = 'com.sk.hannibal'//groupId  一般为包名
+//    artifactId = 'hannibal'//artifactId 一般为项目名称
+//    publishVersion = '1.0.7.1'//版本号
+//    desc = ''//描述，不重要
+//    website = 'https://github.com/magicbaby810/Hannibal'//网站,一般是GitHub的项目地址，一定要是可以访问到的地址
+//}
